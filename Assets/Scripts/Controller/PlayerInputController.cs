@@ -15,7 +15,7 @@ public class PlayerInputController : TopDownCharacterController
     public void OnMove(InputValue value)
     {
         Vector2 moveInput = value.Get<Vector2>().normalized;
-        
+      
         CallMoveEvent(moveInput); //호출(구독한 애들한테 전달)
     }
 
