@@ -10,6 +10,7 @@ public class MainCameraController : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 targetPos = new Vector3(player.position.x, player.position.y, this.transform.position.z);
+
         //두개의 벡터 사이를 선형보간하여 부드럽게 이동하는데 사용된다 
         transform.position = Vector3.Lerp(transform.position, targetPos, smoothing); 
     }

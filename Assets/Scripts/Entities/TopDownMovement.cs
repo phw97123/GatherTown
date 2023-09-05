@@ -7,14 +7,14 @@ public class TopDownMovement : MonoBehaviour
     private TopDownCharacterController _controller;
     private Vector2 _movementDirection = Vector2.zero; 
     private Rigidbody2D _rigidbody;
-    GameObject child = null; 
+    private GameObject child; 
 
     private void Awake()
     {
         _controller = GetComponent<TopDownCharacterController>();
         _rigidbody = GetComponent<Rigidbody2D>();
 
-        child = transform.GetChild(0).gameObject; 
+        child = transform.GetChild(0).gameObject; //첫번째 자식 찾기 
     }
 
     private void FixedUpdate()
@@ -34,10 +34,13 @@ public class TopDownMovement : MonoBehaviour
 
     private void ApplyMovement(Vector2 direction)
     {
-        direction = direction * 5;//5는 속도
+        direction = direction * 5; //5는 속도
         _rigidbody.velocity = direction; //가속도 처리
 
+        //벡터의 크기가 0보다 크면 Move, 0보다 작으면 Idle
         bool isMoving = direction.magnitude > 0;
+
+        //하위 오브젝트에 Sprite가 있음 
         //_controller.GetComponent<Animator>().SetBool("IsMove", isMoving);
         child.GetComponent<Animator>().SetBool("IsMove", isMoving); 
     }
