@@ -20,7 +20,7 @@ public class PlayerInputController : TopDownCharacterController
     {
         Vector2 moveInput = value.Get<Vector2>().normalized;
       
-        if(manager.isAction == false) //Action 중이지 않을 때
+        if(manager.isAction == false) //대화중이라면 이동 X
         {
             CallMoveEvent(moveInput);//호출(구독한 애들한테 전달)
         }
@@ -28,7 +28,7 @@ public class PlayerInputController : TopDownCharacterController
 
     public void OnLook(InputValue value)
     {
-        if(manager.isAction == false)
+        if(manager.isAction == false) //대화중이라면 방향전환 X
         {
             Vector2 newAim = value.Get<Vector2>();
             //스크린 좌표를 월드좌표로 변경해야함
@@ -41,25 +41,23 @@ public class PlayerInputController : TopDownCharacterController
             if (newAim.magnitude >= .9f)
             {
                 CallLookEvent(newAim);
-                PerformRaycast(newAim);
+                PerformRaycast(newAim); //레이캐스팅
             }
         }
     }
 
-    public void OnAction(InputValue value)
+    public void OnAction(InputValue value) //F 키를 누르면 상호작용
     {
-        //Debug.Log("OnAction" + value.ToString());
-        if(scanObject != null)
+        if(scanObject != null) //감지된 오브젝트가 null이 아니면
         {
-            manager.Action(scanObject);
+            manager.Action(scanObject); 
         }
     }
 
-    
-    private void PerformRaycast(Vector2 raycastDirection)
+    private void PerformRaycast(Vector2 raycastDirection) //레이캐스팅 하는 함수
     {
         Vector2 raycastOrigin = transform.position;
-        float raycastDistance = 0.7f;
+        float raycastDistance = 1.0f;
 
         Debug.DrawRay(raycastOrigin, raycastDirection * 0.7f, new Color(0, 1, 0));
 
